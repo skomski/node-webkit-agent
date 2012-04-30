@@ -1,64 +1,73 @@
 var WebSocketServer = require('ws').Server;
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
+
 var agents = require('./lib');
-var wss;
 
-var port = process.env.DEBUG_PORT || 1337;
-var host = process.env.DEBUG_HOST || '127.0.0.1';
-
-function start() {
-    wss = new WebSocketServer({port: port, host: host});
-
-    console.log('webkit-devtools-agent started on %s:%s', host, port);
-
-    wss.on('connection', function(socket) {
-        socket.on('message', function(message) {
-            try {
-                message = JSON.parse(message);
-            } catch(e) {
-                console.log(e);
-                return;
-            }
-
-            var id = message.id;
-            var command = message.method.split('.');
-            var domain = agents[command[0]];
-            var method = command[1];
-            var params = message.params;
-
-            if (!domain || !domain[method]) {
-                console.error('%s is not implemented', message.method);
-                return;
-            }
-
-            domain[method](params, function(result) {
-                socket.send(JSON.stringify({ id: id, result: result }));
-            }, function(event) {
-                socket.send(JSON.stringify(event));
-            });
-        });
-    });
+function WebkitDevAgent() {
+  this.websocket = null;
 }
 
-function stop() {
-    if (wss) {
-        wss.close();
-        console.log('webkit-devtools-agent stopped');
+util.inherits(WebkitDevAgent, EventEmitter);
+
+module.exports = new WebkitDevAgent();
+module.exports.console = agents.Console;
+module.exports.timeline = agents.Timeline;
+
+WebkitDevAgent.prototype.start = function(options) {
+  var self = this;
+  this.websocket = new WebSocketServer({
+    port: options.port,
+    host: options.host
+  });
+
+  this.websocket.on('connection', function(socket) {
+    for (var key in agents) {
+      var agent = agents[key];
+      agent.notify = function(method, params) {
+        socket.send(JSON.stringify({
+          method: method,
+          params: params
+        }));
+      };
     }
-}
 
-if (!module.parent) {
-    start();
-} else {
-    process.on('SIGUSR2', function() {
-        if (wss) {
-            stop();
-        } else {
-            start();
+    socket.on('message', function(message) {
+      try {
+        message = JSON.parse(message);
+      } catch(err) {
+        return self.emit('error', err);
+      }
+
+      var id = message.id;
+      var command = message.method.split('.');
+      var domain = agents[command[0]];
+      var method = command[1];
+      var params = message.params;
+
+      if (!domain || !domain[method]) {
+        return self.emit('error',
+                         new Error(message.method + ' is not implemented'));
+      }
+
+      domain[method](params, function(err, result) {
+        if (err) {
+          return socket.send(JSON.stringify({
+            id: id,
+            error: err
+          }));
         }
+        socket.send(JSON.stringify({
+          id: id,
+          result: result
+        }));
+      });
     });
+  });
 }
 
-process.on('uncaughtException', function (err) {
-    console.error('webkit-devtools-agent: uncaughtException: ');
-    console.error(err.stack);
-});
+WebkitDevAgent.prototype.stop = function(){
+  if (this.websocket) {
+    this.websocket.close();
+  }
+}

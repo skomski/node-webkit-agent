@@ -10,20 +10,20 @@
         "remote",
         "v8"
     ],
-    "homepage": "http://github.com/c4milo/node-webkit-agent",
-    "version": "0.0.4",
-    "author": "Camilo Aguilar",
-    "repository": "git://github.com/c4milo/node-webkit-agent",
+    "homepage": "http://github.com/skomski/node-webkit-agent",
+    "version": "0.0.1",
+    "author": "Karl Skomski",
+    "repository": "git://github.com/skomski/node-webkit-agent",
     "engines": {
-        "node": "0.6 || 0.7 || 0.8"
+        "node": ">=0.6"
     },
     "devDependencies": {
-        "mocha": "0.14.1",
-        "should": "0.6.0"
+      "mocha": "0.14.1",
+      "should": "0.6.0"
     },
     "dependencies": {
-        "v8-profiler": "git://github.com/c4milo/v8-profiler.git#master",
-        "ws": "0.4.13"
+      "v8-profiler": "https://github.com/Skomski/v8-profiler/tarball/a6cff38425f4b1a580446492244f3d5d246e1c19",
+      "ws": "0.4.13"
     },
     "main": "webkit-devtools-agent"
 }
