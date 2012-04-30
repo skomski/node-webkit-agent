@@ -66,7 +66,7 @@ WebkitDevAgent.prototype.start = function(options) {
   });
 }
 
-WebkitDevAgent.prototype.stop = function(){
+WebkitDevAgent.prototype.close = function(){
   if (this.websocket) {
     this.websocket.close();
   }
