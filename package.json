@@ -1,29 +1,30 @@
 {
-    "name": "webkit-devtools-agent",
-    "description": "Webkit devtools agent that leverages remote debugging and profiling of nodejs applications using the built-in webkit inspector.",
-    "keywords": [
-        "devtools",
-        "agent",
-        "webkit",
-        "debugger",
-        "profiler",
-        "remote",
-        "v8"
-    ],
-    "homepage": "http://github.com/skomski/node-webkit-agent",
-    "version": "0.0.1",
-    "author": "Karl Skomski",
-    "repository": "git://github.com/skomski/node-webkit-agent",
-    "engines": {
-        "node": ">=0.6"
-    },
-    "devDependencies": {
-      "mocha": "0.14.1",
-      "should": "0.6.0"
-    },
-    "dependencies": {
-      "v8-profiler": "https://github.com/Skomski/v8-profiler/tarball/a6cff38425f4b1a580446492244f3d5d246e1c19",
-      "ws": "0.4.13"
-    },
-    "main": "webkit-devtools-agent"
+  "name": "webkit-devtools-agent",
+  "description": "Webkit devtools agent that leverages remote debugging and profiling of nodejs applications using the built-in webkit inspector.",
+  "keywords": [
+    "devtools",
+    "agent",
+    "webkit",
+    "debugger",
+    "profiler",
+    "remote",
+    "v8"
+  ],
+  "homepage": "http://github.com/skomski/node-webkit-agent",
+  "version": "0.0.1",
+  "author": "Karl Skomski",
+  "repository": "git://github.com/skomski/node-webkit-agent",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "devDependencies": {
+    "mocha": "0.14.1",
+    "should": "0.6.0"
+  },
+  "dependencies": {
+    "v8-profiler": "https://github.com/Skomski/v8-profiler/tarball/a6cff38425f4b1a580446492244f3d5d246e1c19",
+    "ws": "0.4.13",
+    "underscore": "1.3.3"
+  },
+  "main": "webkit-devtools-agent"
 }

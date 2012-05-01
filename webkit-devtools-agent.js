@@ -54,7 +54,7 @@ WebkitDevAgent.prototype.start = function(options) {
         if (err) {
           return socket.send(JSON.stringify({
             id: id,
-            error: err
+            error: err.message
           }));
         }
         socket.send(JSON.stringify({
