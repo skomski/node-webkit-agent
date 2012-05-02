@@ -1,4 +1,4 @@
-This is a fork of c4milo's node-webkit-agent. Added timeline and console and changed other stuff like module exports and coding style.
+This is a fork of c4milo's node-webkit-agent. Added timeline and console. Changed other stuff like module exports and coding style.
 
 # node-webkit-agent
 This module is an implementation of the
