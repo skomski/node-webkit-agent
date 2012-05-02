@@ -25,6 +25,7 @@ WebkitDevAgent.prototype.start = function(options) {
     for (var key in agents) {
       var agent = agents[key];
       agent.notify = function(method, params) {
+
         socket.send(JSON.stringify({
           method: method,
           params: params
