@@ -1,4 +1,4 @@
-This is a fork of c4milo's node-webkit-agent.
+This is a fork of c4milo's node-webkit-agent. Added timeline and console and changed other stuff like module exports and coding style.
 
 # node-webkit-agent
 This module is an implementation of the
@@ -9,10 +9,10 @@ WIP
 ## Features
 This module allows you to remotely debug and profile your node.js applications.
 
-* Debugging
+* Debugging (WIP)
 * Heap and CPU profiling
 * Console
-* Network monitoring
+* Timeline
 
 ## Usage
 ```javascript
@@ -29,7 +29,7 @@ console.log('[%s] Server running at http://127.0.0.1:8080/', process.pid);
 ```
 ### Connecting to the agent
 
-Using your browser, go to http://trac.webkit.org/export/head/trunk/Source/WebCore/inspector/front-end/inspector.html?ws=localhost:1337. It's important to make sure
+Using your browser, go to http://trac.webkit.org/export/head/trunk/Source/WebCore/inspector/front-end/inspector.html?ws=localhost:9222. It's important to make sure
 your browser supports websockets, otherwise the front-end won't be able to connect to the node agent whatsoever.
 
 For more documentation about how to use and interpret devtools, please go to the [Devtools official documentation](http://code.google.com/chrome/devtools/docs/overview.html)
