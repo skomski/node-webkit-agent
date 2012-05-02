@@ -92,16 +92,7 @@ WebInspector.ScriptsPanel = function(presentationModel)
     this.sidebarPanes.scopechain = new WebInspector.ScopeChainSidebarPane();
     this.sidebarPanes.jsBreakpoints = new WebInspector.JavaScriptBreakpointsSidebarPane(this._presentationModel, this._showSourceLine.bind(this));
     if (Capabilities.nativeInstrumentationEnabled) {
-        this.sidebarPanes.domBreakpoints = WebInspector.domBreakpointsSidebarPane;
-        this.sidebarPanes.xhrBreakpoints = new WebInspector.XHRBreakpointsSidebarPane();
-        this.sidebarPanes.eventListenerBreakpoints = new WebInspector.EventListenerBreakpointsSidebarPane();
     }
-
-    if (Preferences.exposeWorkersInspection && !WebInspector.WorkerManager.isWorkerFrontend()) {
-        WorkerAgent.setWorkerInspectionEnabled(true);
-        this.sidebarPanes.workerList = new WebInspector.WorkerListSidebarPane(WebInspector.workerManager);
-    } else
-        this.sidebarPanes.workers = new WebInspector.WorkersSidebarPane();
 
     this._debugSidebarContentsElement = document.createElement("div");
     this._debugSidebarContentsElement.id = "scripts-debug-sidebar-contents";
@@ -206,8 +197,6 @@ WebInspector.ScriptsPanel.prototype = {
     wasShown: function()
     {
         WebInspector.Panel.prototype.wasShown.call(this);
-        if (Capabilities.nativeInstrumentationEnabled)
-            this._debugSidebarContentsElement.insertBefore(this.sidebarPanes.domBreakpoints.element, this.sidebarPanes.xhrBreakpoints.element);
         this.sidebarPanes.watchExpressions.show();
 
         this._navigatorController.wasShown();
@@ -707,9 +696,6 @@ WebInspector.ScriptsPanel.prototype = {
         this.sidebarPanes.scopechain.update(null);
         this.sidebarPanes.jsBreakpoints.clearBreakpointHighlight();
         if (Capabilities.nativeInstrumentationEnabled) {
-            this.sidebarPanes.domBreakpoints.clearBreakpointHighlight();
-            this.sidebarPanes.eventListenerBreakpoints.clearBreakpointHighlight();
-            this.sidebarPanes.xhrBreakpoints.clearBreakpointHighlight();
         }
 
         this._clearCurrentExecutionLine();

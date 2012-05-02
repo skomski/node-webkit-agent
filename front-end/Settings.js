@@ -39,10 +39,10 @@ var Preferences = {
     showMissingLocalizedStrings: false,
     useLowerCaseMenuTitlesOnWindows: false,
     sharedWorkersDebugNote: undefined,
-    localizeUI: true,
+    localizeUI: false,
     exposeDisableCache: false,
     exposeWorkersInspection: false,
-    applicationTitle: "Web Inspector - %s",
+    applicationTitle: "Node Inspector - %s",
     showHeapSnapshotObjectsHiddenProperties: false,
     showDockToRight: false
 }
