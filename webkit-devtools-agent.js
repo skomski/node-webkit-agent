@@ -21,6 +21,12 @@ WebkitDevAgent.prototype.start = function(options) {
     host: options.host
   });
 
+  for (var key in agents) {
+    var agent = agents[key];
+    agent.notify = function(method, params) {
+    };
+  }
+
   this.websocket.on('connection', function(socket) {
     for (var key in agents) {
       var agent = agents[key];
