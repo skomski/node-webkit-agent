@@ -12,10 +12,6 @@ http.createServer(function (req, res) {
     agent.timeline.timeStamp('timeout: new request');
   }, 1000);
 
-  setInterval(function() {
-    agent.timeline.timeStamp('interval: new request');
-  }, 1000);
-
   res.end('Hello World\n');
 }).listen(9000, '127.0.0.1');
 

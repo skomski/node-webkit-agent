@@ -362,10 +362,18 @@ WebInspector.loaded = function()
         ws = "ws://" + host + "/devtools/page/" + page;
     }
 
-    if (ws) {
+    function createWebSocket() {
         WebInspector.socket = new WebSocket(ws);
         WebInspector.socket.onmessage = function(message) { InspectorBackend.dispatch(message.data); }
         WebInspector.socket.onerror = function(error) { console.error(error); }
+        WebInspector.socket.onclose = function(error) { createWebSocket(); }
+        WebInspector.socket.onopen = function() {
+            InspectorFrontendHost.sendMessageToBackend = WebInspector.socket.send.bind(WebInspector.socket);
+        }
+    }
+
+    if (ws) {
+        createWebSocket();
         WebInspector.socket.onopen = function() {
             InspectorFrontendHost.sendMessageToBackend = WebInspector.socket.send.bind(WebInspector.socket);
             WebInspector.doLoadedDone();
